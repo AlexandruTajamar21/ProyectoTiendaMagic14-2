@@ -1,0 +1,45 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" />
+    <title>@ViewData["Title"] TiendaMagic</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+    <link href="~/css/Estilos.css" rel="stylesheet" />
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-dark bg-dark border-bottom">
+            <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">TiendaMagic</a>
+            <ul class="navbar-nav flex-grow-1">
+                <li class="nav-item">
+                    <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right" style="text-size-adjust:auto">
+                <li class="nav-item" style="justify-content:end">
+                    <a class="nav-link" asp-controller="Usuario" asp-action="Index">Login</a>
+                </li>
+                <li class="nav-item" style="justify-content:end">
+                    <a class="nav-link" asp-controller="Usuario" asp-action="Registro">Registro</a>
+                </li>
+            </ul>
+        </nav>
+    </header>
+    <div>
+        <main role="main" class="pb-3">
+            <img id="imgFondo" src="~/Fondos/fondomagic2.png" />
+            @RenderBody()
+        </main>
+    </div>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>
+

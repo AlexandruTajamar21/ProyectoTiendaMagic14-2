@@ -1,0 +1,17 @@
+﻿img#imgFondo {
+    z-index: -1;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    left: 50%;
+    top: 50%;
+    transform: translateX(-50%) translateY(-50%)
+}
+
+
+
+nav#Navegacion {
+    background-color: #00070a !important;
+}
+

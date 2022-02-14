@@ -1,0 +1,27 @@
+﻿@model IEnumerable<ProyectoTiendaMagic.Models.Item>
+
+@{
+    ViewData["Title"] = "Index";
+}
+<table class="table">
+    <thead>
+        <tr>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <div class="card-group">
+                <div class="card">
+                    <img src="@item.Imagen" class="card-img-top" style="width:100px; height:100px">
+                    <div class="card-body">
+                        <h5 class="card-title">@item.Nombre</h5>
+                        <p class="card-text">@item.Descripcion</p>
+                        <a class="btn btn-primary">Detalles</a>
+                    </div>
+                </div>
+            </div>
+        }
+    </tbody>
+</table>
