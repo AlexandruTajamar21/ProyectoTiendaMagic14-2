@@ -10,7 +10,8 @@ namespace ProyectoTiendaMagic.Repositories
     {
         List<Usuario> GetAllUsuarios();
         public Usuario ConfirmarUsuario(string correo, string contraseña);
-        public Usuario ExisteUsuario(string correo);
-        void InsertarUsuario();
+        public Boolean ExisteUsuario(string correo);
+        public Usuario GetUsuario(string nombre);
+        void InsertarUsuario(string nombre, string contrasena, string correo, string TipoUsuario);
     }
 }

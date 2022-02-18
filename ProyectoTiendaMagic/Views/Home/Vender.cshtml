@@ -1,25 +1,26 @@
-﻿@model ProyectoTiendaMagic.Models.Usuario
+﻿@model ProyectoTiendaMagic.Models.Item
 
-@{ ViewData["Title"] = "Registro"; }
+@{
+    ViewData["Title"] = "Vender";
+}
 
 <div class="row" id="outPopUp">
     <div class="col-md-4">
         <form method="post">
             <div class="form-group">
                 <input class="form-control" name="nombre" placeholder="Nombre" />
-                <span class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input class="form-control" type="password" name="contrasena" placeholder="Contraseña" />
-                <span class="text-danger"></span>
+                <input class="form-control" type="number" name="producto" placeholder="Producto" />
             </div>
             <div class="form-group">
-                <input class="form-control" type="password" name="conficontrasena" placeholder="Confirmar Contraseña" />
-                <span class="text-danger"></span>
+                <input class="form-control" type="number" name="precio" placeholder="Precio" />
             </div>
             <div class="form-group">
-                <input class="form-control" type="text" name="correo" placeholder="Correo Electronico" />
-                <span class="text-danger"></span>
+                <input class="form-control" type="file" name="Imagen" placeholder="Imagen" />
+            </div>
+            <div class="form-group">
+                <input class="form-control" type="text" name="Descripcion" placeholder="Descripcion" />
             </div>
             <div>
                 <button class="btn btn-info" type="submit">Registrar</button>
@@ -38,7 +39,7 @@
         justify-content: center;
     }
 </style>
+
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
-

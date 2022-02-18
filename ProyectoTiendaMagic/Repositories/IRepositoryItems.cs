@@ -10,5 +10,6 @@ namespace ProyectoTiendaMagic.Repositories
     public interface IRepositoryItems
     {
         List<Item> GetAllItems();
+        public int GetMaxIdItem()
     }
 }

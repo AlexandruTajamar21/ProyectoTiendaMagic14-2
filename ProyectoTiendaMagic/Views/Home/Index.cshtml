@@ -12,14 +12,12 @@
     <tbody>
         @foreach (var item in Model)
         {
-            <div class="card-group">
-                <div class="card">
-                    <img src="@item.Imagen" class="card-img-top" style="width:100px; height:100px">
-                    <div class="card-body">
-                        <h5 class="card-title">@item.Nombre</h5>
-                        <p class="card-text">@item.Descripcion</p>
-                        <a class="btn btn-primary">Detalles</a>
-                    </div>
+            <div class="card card-group">
+                <img src="@item.Imagen" class="card-img-top" style="width:100px; height:100px">
+                <div class="card-body">
+                    <h5 class="card-title">@item.Nombre</h5>
+                    <p class="card-text">@item.Descripcion</p>
+                    <a class="btn btn-primary">Detalles</a>
                 </div>
             </div>
         }

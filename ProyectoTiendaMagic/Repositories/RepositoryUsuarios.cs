@@ -3,9 +3,25 @@ using ProyectoTiendaMagic.Data;
 using ProyectoTiendaMagic.Models;
 using System;
 using System.Collections.Generic;
-using System.Data.SqlClient;
+using Microsoft.Data.SqlClient;
 using System.Linq;
 using System.Threading.Tasks;
+
+#region Procedures
+
+    //ALTER procedure[dbo].[SP_INSERTAR_USUARIO]
+    //(@IdUser int, @Nombre varchar(50), @Contraseña varchar(50), @Direccion varchar(50), @Correo varchar(50),@TipoUsuario varchar(50))
+    //as
+    //    INSERT INTO Usuario
+	   // VALUES (@IdUser, @Nombre, @Contraseña, @Direccion, @Correo, @TipoUsuario)
+    //go
+
+    //create procedure SP_Get_Max_Id
+    //as
+	   // select MAX(IdUser) from Usuario
+    //go
+
+#endregion
 
 namespace ProyectoTiendaMagic.Repositories
 {
@@ -33,24 +49,56 @@ namespace ProyectoTiendaMagic.Repositories
             return consulta.SingleOrDefault();
         }
 
-        public Usuario ExisteUsuario(string correo)
+        public Boolean ExisteUsuario(string correo)
         {
             var consulta = from datos in this.context.Usuarios
                            where datos.Correo == correo
                            select datos;
-            return consulta.SingleOrDefault();
+
+
+            if(consulta.FirstOrDefault() != null)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
 
-        public void InsertarUsuario()
+        public int GetMaxId()
         {
-            //string sql = "SP_INSERTAR_USUARIO @IdUser, @Nombre, @Contraseña, @Direccion, @Correo";
-            //SqlParameter pamid = new SqlParameter("@IdUser", user.IdUser);
-            //SqlParameter pamnom = new SqlParameter("@Nombre", user.Nombre);
-            //SqlParameter pamcon = new SqlParameter("@Contraseña", user.Contraseña);
-            //SqlParameter pamdir = new SqlParameter("@Direccion", user.Direccion);
-            //SqlParameter pamcor = new SqlParameter("@Correo", user.Correo);
+            if (this.context.Usuarios.Count() == 0)
+            {
+                return 0;
+            }
+            else
+            {
+                return this.context.Usuarios.Max(z => z.IdUser) + 1;
+            }
+        }
 
-            //this.context.Database.ExecuteSqlRaw(sql, pamid,pamnom,pamcon,pamdir,pamcor);
+        public void InsertarUsuario(string nombre, string contrasena, string correo, string TipoUsuario)
+        {
+            int id = this.GetMaxId();
+            string sql = "SP_INSERTAR_USUARIO @IdUser, @Nombre, @Contraseña, @Direccion, @Correo,@TipoUsuario";
+            SqlParameter pamid = new SqlParameter("@IdUser", id);
+            SqlParameter pamnom = new SqlParameter("@Nombre",nombre );
+            SqlParameter pamcon = new SqlParameter("@Contraseña", contrasena);
+            SqlParameter pamdir = new SqlParameter("@Direccion", "");
+            SqlParameter pamcorr = new SqlParameter("@Correo", correo);
+            SqlParameter pamuser = new SqlParameter("@TipoUsuario", TipoUsuario);
+
+            this.context.Database.ExecuteSqlRaw(sql,pamid,pamnom,pamcon, pamdir,pamcorr,pamuser);
+        }
+
+        public Usuario GetUsuario(string nombre)
+        {
+            var consulta = from datos in this.context.Usuarios
+                           where datos.Nombre == nombre
+                           select datos;
+            Usuario user = consulta.FirstOrDefault();
+            return user;
         }
     }
 }

@@ -15,9 +15,9 @@ namespace MvcSeguridadEmpleados.Controllers
 {
     public class ManageController : Controller
     {
-        private RepositoryUsuarios repo;
+        private IRepositoryUsuarios repo;
 
-        public ManageController(RepositoryUsuarios repo)
+        public ManageController(IRepositoryUsuarios repo)
         {
             this.repo = repo;
         }
