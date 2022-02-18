@@ -25,6 +25,22 @@ namespace ProyectoTiendaMagic.Repositories
             return consulta.ToList();
         }
 
+        public Usuario ConfirmarUsuario(string correo, string contraseña)
+        {
+            var consulta = from datos in this.context.Usuarios
+                           where datos.Correo == correo && datos.Contraseña == contraseña
+                           select datos;
+            return consulta.SingleOrDefault();
+        }
+
+        public Usuario ExisteUsuario(string correo)
+        {
+            var consulta = from datos in this.context.Usuarios
+                           where datos.Correo == correo
+                           select datos;
+            return consulta.SingleOrDefault();
+        }
+
         public void InsertarUsuario()
         {
             //string sql = "SP_INSERTAR_USUARIO @IdUser, @Nombre, @Contraseña, @Direccion, @Correo";

@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -28,13 +29,21 @@ namespace ProyectoTiendaMagic
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddDistributedMemoryCache();
+            services.AddSession();
+            services.AddAuthentication(options =>
+            {
+                options.DefaultSignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+                options.DefaultAuthenticateScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+
+            }).AddCookie();
+
             string cadenasql = this.Configuration.GetConnectionString("cadenaAzureTajamar");
             services.AddDbContext<UserContext>(options => options.UseSqlServer(cadenasql));
             services.AddTransient<IRepositoryItems, RepositoryItem>();
             services.AddTransient<IRepositoryUsuarios, RepositoryUsuarios>();
-
-
-            services.AddControllersWithViews();
+            services.AddControllersWithViews(opciones => opciones.EnableEndpointRouting = false).AddSessionStateTempDataProvider();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -45,8 +54,27 @@ namespace ProyectoTiendaMagic
             {
                 app.UseDeveloperExceptionPage();
             }
+            else
+            {
+                app.UseExceptionHandler("/Home/Error");
+                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
+                app.UseHsts();
+            }
+            app.UseHttpsRedirection();
+            app.UseStaticFiles();
 
             app.UseRouting();
+
+            app.UseAuthentication();
+            app.UseAuthorization();
+            app.UseSession();
+            app.UseMvc(routes =>
+            {
+                routes.MapRoute(
+                    name: "default",
+                    template: "{controller=Home}/{action=Index}/{id?}"
+                    );
+            });
 
             app.UseStaticFiles();
             app.UseStaticFiles(new StaticFileOptions
@@ -54,12 +82,6 @@ namespace ProyectoTiendaMagic
                 FileProvider = new PhysicalFileProvider(
                     Path.Combine(env.ContentRootPath, "Assets")),
                     RequestPath = "/Assets"
-            });
-
-            app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapControllerRoute(
-                    name: "default", pattern: "{controller=Home}/{action=Index}");
             });
         }
     }

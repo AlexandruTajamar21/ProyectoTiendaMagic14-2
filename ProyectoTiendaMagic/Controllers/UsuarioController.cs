@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using ProyectoTiendaMagic.Data;
+using ProyectoTiendaMagic.Filters;
 using ProyectoTiendaMagic.Models;
 using ProyectoTiendaMagic.Repositories;
 using System;
@@ -18,10 +19,13 @@ namespace ProyectoTiendaMagic.Controllers
             this.repo = repo;
         }
 
-        public IActionResult Login()
+        [AuthorizeUsers]
+        public IActionResult PerfilUsuario(string correo)
         {
+            Usuario usuario = this.repo.ExisteUsuario(correo);
             return View();
         }
+
         public IActionResult Registro()
         {
             return View();
@@ -30,7 +34,7 @@ namespace ProyectoTiendaMagic.Controllers
         [HttpPost]
         public IActionResult Registro(int id)
         {
-
+            return View();
         }
     }
 }

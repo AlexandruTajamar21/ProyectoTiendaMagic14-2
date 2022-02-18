@@ -6,7 +6,7 @@
 <hr />
 <div class="row" id="outPopUp">
     <div class="col-md-4">
-        <form>
+        <form method="post">
             <div class="form-group">
                 <input class="form-control" placeholder="Nombre" />
                 <span class="text-danger"></span>
@@ -26,6 +26,7 @@
             <div class="form-group">
                 <a asp-controller="Home" asp-action="Index" class="btn btn-dark">Exit</a>
             </div>
+            <h1 style="color:red">@ViewData["MENSAJE"]</h1>
         </form>
     </div>
 </div>

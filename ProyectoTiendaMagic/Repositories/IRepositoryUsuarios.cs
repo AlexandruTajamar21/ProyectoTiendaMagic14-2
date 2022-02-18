@@ -9,6 +9,8 @@ namespace ProyectoTiendaMagic.Repositories
     public interface IRepositoryUsuarios
     {
         List<Usuario> GetAllUsuarios();
+        public Usuario ConfirmarUsuario(string correo, string contraseña);
+        public Usuario ExisteUsuario(string correo);
         void InsertarUsuario();
     }
 }

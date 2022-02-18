@@ -21,5 +21,7 @@ namespace ProyectoTiendaMagic.Models
         public string Direccion { get; set; }
         [Column("Correo")]
         public string Correo { get; set; }
+        [Column("TipoUsuario")]
+        public string TipoUsuario { get; set; }
     }
 }
