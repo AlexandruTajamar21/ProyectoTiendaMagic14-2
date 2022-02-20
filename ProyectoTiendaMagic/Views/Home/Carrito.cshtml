@@ -1,0 +1,45 @@
+﻿@model IEnumerable<ProyectoTiendaMagic.Models.Item>
+
+@{
+    ViewData["Title"] = "Carrito";
+}
+
+@if(Model != null)
+{
+    <table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.IdItem)
+            </th>
+            <th>
+                Vendedor
+            </th>
+            <th>
+                Producto
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Precio)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+    @foreach (var item in Model) {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IdItem)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IdUser)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IdProducto)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Precio)
+                </td>
+            </tr>
+    }
+        </tbody>
+    </table>
+}

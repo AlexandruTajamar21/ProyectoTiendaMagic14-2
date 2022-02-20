@@ -31,18 +31,28 @@ namespace ProyectoTiendaMagic
         {
             services.AddDistributedMemoryCache();
             services.AddSession();
+
+            services.AddAuthorization(option =>
+            {
+                option.AddPolicy("ACCESOESPECIAL", policy => policy.RequireClaim("ACCESO"));
+                option.AddPolicy("ACCESOADMIN", policy => policy.RequireClaim("ACCESO").RequireClaim("ADMIN").RequireClaim("prueba"));
+            });
             services.AddAuthentication(options =>
             {
                 options.DefaultSignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
                 options.DefaultAuthenticateScheme = CookieAuthenticationDefaults.AuthenticationScheme;
                 options.DefaultChallengeScheme = CookieAuthenticationDefaults.AuthenticationScheme;
 
-            }).AddCookie();
+            }).AddCookie(CookieAuthenticationDefaults.AuthenticationScheme
+                , config =>
+                {
+                    config.AccessDeniedPath = "/Shared/ErrorAcceso";
+                });
 
             string cadenasql = this.Configuration.GetConnectionString("cadenaAzureTajamar");
             services.AddDbContext<UserContext>(options => options.UseSqlServer(cadenasql));
-            services.AddTransient<IRepositoryItems, RepositoryItem>();
-            services.AddTransient<IRepositoryUsuarios, RepositoryUsuarios>();
+            services.AddTransient<RepositoryItem>();
+            services.AddTransient<RepositoryUsuarios>();
             services.AddControllersWithViews(opciones => opciones.EnableEndpointRouting = false).AddSessionStateTempDataProvider();
         }
 

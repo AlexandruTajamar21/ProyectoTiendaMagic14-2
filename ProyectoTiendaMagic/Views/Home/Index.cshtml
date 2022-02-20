@@ -1,25 +1,77 @@
-﻿@model IEnumerable<ProyectoTiendaMagic.Models.Item>
+﻿@model IEnumerable<ProyectoTiendaMagic.Models.ViewProducto>
 
 @{
     ViewData["Title"] = "Index";
 }
-<table class="table">
-    <thead>
-        <tr>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
-            <div class="card card-group">
-                <img src="@item.Imagen" class="card-img-top" style="width:100px; height:100px">
-                <div class="card-body">
-                    <h5 class="card-title">@item.Nombre</h5>
-                    <p class="card-text">@item.Descripcion</p>
-                    <a class="btn btn-primary">Detalles</a>
+
+<img id="imgFondo" src="~/Fondos/fondomagic2.png" />
+<form method="post">
+    <div class="row justify-content-center">
+        <div class="col-10 col-sm-8 col-md-6 col-lg-5 col-xl-4 col-xxl-3 rounded border-primary border border-2 my-2"
+             style="background-color:grey)">
+            <div class="form-floating my-2">
+                <input type="text" class="form-control" name="filtroNombre"
+                       placeholder="introduzca nombre">
+                <label for="inputFiltroNombre">Nombre</label>
+            </div>
+            <div class="text-center">
+                <button type="submit" class="btn btn-info my-2" id="filter">Buscar</button>
+            </div>
+
+        </div>
+    </div>
+</form>
+
+
+<div class="row row-cols-3 g-3 justify-content-center mt-2">
+    @foreach (var item in Model)
+    {
+        <div class="col m-2" style="width: 286px;">
+            <div class="card" style="width: 286px; height: 463px;">
+                <img class="img-fluid rounded" style="object-fit:cover; width: 286px; height: 463px;"
+                     src="@item.Imagen" alt="@item.Nombre" />
+                <div class="cartaAnimada card-img-overlay p-0 d-flex align-items-end">
+                    <div class="ocultar-elemento-active col-12 p-3 text-center"
+                         style="background-color: rgba(170,212,235,0.9); ">
+                        <h5 class="card-title">@item.Nombre</h5>
+                        <a class="btn btn-success" asp-controller="Home" asp-action="CompraCartas" asp-route-idProducto="@item.IdProducto">Comprar</a>
+                    </div>
                 </div>
             </div>
+        </div>
+    }
+</div>
+
+@section style{
+    <style>
+        .ocultar-elemento-active {
+            transition: all 1s ease-in-out;
+            opacity: 0;
         }
-    </tbody>
-</table>
+
+        .ocultar-elemento-inactive {
+            transition: all 1s ease-in-out;
+            opacity: 1;
+        }
+    </style>
+}
+
+@section script{
+    <script>
+        $(document).ready(function () {
+            $(".cartaAnimada").mouseover(function () {
+
+                $(this).children().addClass("ocultar-elemento-inactive")
+                $(this).children().removeClass("ocultar-elemento-active")
+            });
+
+            $(".cartaAnimada").mouseout(function () {
+
+                $(this).children().addClass("ocultar-elemento-active")
+                $(this).children().removeClass("ocultar-elemento-inactive")
+
+            });
+        });</script>
+
+}
+

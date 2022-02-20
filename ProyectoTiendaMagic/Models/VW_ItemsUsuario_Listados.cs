@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 
 namespace ProyectoTiendaMagic.Models
 {
-    [Table("Item")]
-    public class Item
+    [Table("VW_ItemsUsuario_Listados")]
+    public class VW_ItemsUsuario_Listados
     {
         [Key]
         [Column("IdItem")]
@@ -17,12 +17,11 @@ namespace ProyectoTiendaMagic.Models
         public string Nombre { get; set; }
         [Column("IdUser")]
         public int IdUser { get; set; }
-        [Column("IdProducto")]
-        public string IdProducto { get; set; }
         [Column("Precio")]
         public int Precio { get; set; }
+        [Column("IdProducto")]
+        public string IdProducto { get; set; }
         [Column("Estado")]
-        //Si es 1 esta disponible y si es 0 esta bloqueado
         public int Estado { get; set; }
         [Column("Imagen")]
         public string Imagen { get; set; }

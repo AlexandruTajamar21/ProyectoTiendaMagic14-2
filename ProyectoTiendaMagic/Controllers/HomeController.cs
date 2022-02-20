@@ -1,4 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using ProyectoTiendaMagic.Extensions;
+using ProyectoTiendaMagic.Filters;
 using ProyectoTiendaMagic.Models;
 using ProyectoTiendaMagic.Repositories;
 using System;
@@ -11,16 +14,47 @@ namespace ProyectoTiendaMagic.Controllers
 {
     public class HomeController : Controller
     {
-        private IRepositoryItems repo;
+        private RepositoryItem repo;
 
-        public HomeController(IRepositoryItems repo)
+        public HomeController(RepositoryItem repo)
         {
             this.repo = repo;
         }
         public IActionResult Index()
         {
-            List<Item> items = this.repo.GetAllItems();
+            List<ViewProducto> items = this.repo.GetAllItems();
             return View(items);
+        }
+
+        [HttpPost]
+        public IActionResult Index(string filtroNombre)
+        {
+            List<ViewProducto> items = this.repo.GetItemsFiltro(filtroNombre);
+            return View(items);
+        }
+
+        public IActionResult CompraCartas(string idProducto)
+        {
+            List<VW_ItemsUsuario_Listados> items = this.repo.GetItemsProducto(idProducto);
+            return View(items);
+        }
+
+        public IActionResult InsertarCarrito(int idItem)
+        {
+            Item item = this.repo.getItemId(idItem);
+            List<int> items;
+            if (HttpContext.Session.GetString("CARRITO") == null)
+            {
+                //No existe nada en la session, creamos la coleccion
+                items = new List<int>();
+            }
+            else
+            {
+                items = HttpContext.Session.GetObject<List<int>>("CARRITO");
+            }
+            items.Add(idItem);
+            HttpContext.Session.SetObject("CARRITO", items);
+            return RedirectToAction("CompraCartas", new { idProducto = item.IdProducto });
         }
 
         public IActionResult Vender()
@@ -28,15 +62,38 @@ namespace ProyectoTiendaMagic.Controllers
             return View();
         }
 
+        public IActionResult Comprar(int idCarta, string idProducto)
+        {
+            int userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
+            this.repo.TransfiereCarta(idCarta, userId);
+            return RedirectToAction("CompraCartas", new { idProducto = idProducto });
+        }
+
         [HttpPost]
-        public IActionResult Vender(string nombre, int producto, int precio, string imagen, string descripcion)
+        public IActionResult Vender(string nombre, string producto, int precio, string imagen, string descripcion)
         {
             int idItem = this.repo.GetMaxIdItem();
-            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            int userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
             int estado = 1;
 
-            this.repo.
+            this.repo.InsertarItem(idItem, nombre, userId, producto, precio, estado, imagen, descripcion);
 
+            return View();
+        }
+
+        public IActionResult Carrito()
+        {
+            if(HttpContext.Session.GetObject<List<int>>("CARRITO") == null)
+            {
+                return View();
+            }
+            List<int> carrito = HttpContext.Session.GetObject<List<int>>("CARRITO");
+            List<Item> items = this.repo.GetItemsCarrito(carrito);
+            return View(items);
+        }
+        [AuthorizeUsers(Policy = "ACCESOADMIN")]
+        public IActionResult Prueba()
+        {
             return View();
         }
     }

@@ -15,9 +15,9 @@ namespace MvcSeguridadEmpleados.Controllers
 {
     public class ManageController : Controller
     {
-        private IRepositoryUsuarios repo;
+        private RepositoryUsuarios repo;
 
-        public ManageController(IRepositoryUsuarios repo)
+        public ManageController(RepositoryUsuarios repo)
         {
             this.repo = repo;
         }
@@ -36,6 +36,7 @@ namespace MvcSeguridadEmpleados.Controllers
                 Claim claimNombre = new Claim(ClaimTypes.Name, usuario.Nombre);
                 Claim claimId = new Claim(ClaimTypes.NameIdentifier, usuario.IdUser.ToString());
                 Claim claimRole = new Claim(ClaimTypes.Role, usuario.TipoUsuario);
+                Claim claimPrueba = new Claim("prueba", "XD");
                 identity.AddClaim(claimNombre);
                 identity.AddClaim(claimId);
                 identity.AddClaim(claimRole);

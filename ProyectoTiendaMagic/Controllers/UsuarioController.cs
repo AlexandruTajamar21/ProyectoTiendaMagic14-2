@@ -15,11 +15,13 @@ namespace ProyectoTiendaMagic.Controllers
 {
     public class UsuarioController : Controller
     {
-        private IRepositoryUsuarios repo;
+        private RepositoryUsuarios repo;
+        private RepositoryItem repoitem;
 
-        public UsuarioController(IRepositoryUsuarios repo)
+        public UsuarioController(RepositoryUsuarios repo, RepositoryItem repoitem)
         {
             this.repo = repo;
+            this.repoitem = repoitem;
         }
 
         [AuthorizeUsers]
@@ -31,9 +33,17 @@ namespace ProyectoTiendaMagic.Controllers
         [AuthorizeUsers]
         public IActionResult PerfilUsuario()
         {
-            string nombre = this.HttpContext.User.Identity.Name;
-            Usuario user = this.repo.GetUsuario(nombre);
-            return View(user);
+            //@if(Context.User.Claims.Contains(Context.User.FindFirst("Especial")))
+            int userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
+            string username = User.FindFirstValue(ClaimTypes.Name);
+            List<Item> items = this.repoitem.getItemsUser(userId);
+
+            Usuario user = this.repo.GetUsuario(username);
+            ViewData["Direccion"] = user.Direccion;
+            ViewData["Correo"] = user.Correo;
+            ViewData["Nombre"] = user.Nombre;
+
+            return View(items);
         }
 
         public IActionResult Registro()

@@ -25,7 +25,7 @@ using System.Threading.Tasks;
 
 namespace ProyectoTiendaMagic.Repositories
 {
-    public class RepositoryUsuarios:IRepositoryUsuarios
+    public class RepositoryUsuarios
     {
         private UserContext context;
 

@@ -1,0 +1,115 @@
+﻿@model IEnumerable<ProyectoTiendaMagic.Models.VW_ItemsUsuario_Listados>
+
+@{
+    ViewData["Title"] = "CompraCartas";
+}
+
+<div class="row row-cols-4 justify-content-center">
+    <div class="col-12">
+        <div class="card mb-3 mt-5" style=" background-color: rgba(170,212,235,0.7)">
+            <div class="row g-0">
+                <div class="col-sm-12 col-md-6 col-lg-5 d-flex justify-content-center">
+                    <img style="object-fit: cover" src="@Model.First().Imagen" class="img-fluid border border-2 border-dark" alt="Ayaka">
+                </div>
+                <div class="col-sm-4 col-md-3 col-lg-5 text-sm-center text-md-start d-flex align-items-center">
+                    <div class="card-body">
+                        <h5 class="card-title">@Model.First().IdProducto</h5>
+                        <h6>@Model.First().Descripcion</h6>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Vendedor
+            </th>
+            <th>
+                Precio€
+            </th>
+            <th>
+                Estado
+            </th>
+            @if (Context.User.Identity.IsAuthenticated != false)
+            {
+                <th></th>
+                <th></th>
+            }
+            </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            @if (Context.User.Identity.IsAuthenticated)
+            {
+                @if (int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)) != item.IdUser)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Nombre)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Precio)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Estado)
+                        </td>
+                        @if (Context.User.Identity.IsAuthenticated)
+                        {
+                            <td>
+                                <a asp-controller="Home" asp-action="Comprar" asp-route-idCarta="@item.IdItem" asp-route-idVendedor="@item.IdUser" asp-route-idProducto="@item.IdProducto" class="btn btn-success">Comprar</a>
+                            </td>
+                            <td>
+                                <a asp-controller="Home" asp-action="InsertarCarrito" asp-route-idItem="@item.IdItem" class="btn btn-success">Añadir al Carrito</a>
+                            </td>
+                        }
+                    </tr>
+                }
+            }
+            else
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Nombre)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Precio)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Estado)
+                    </td>
+                    @if (Context.User.Identity.IsAuthenticated != false)
+                    {
+                        <td>
+                            <a asp-controller="Home" asp-action="Comprar" asp-route-idCarta="@item.IdItem" asp-route-idVendedor="@item.IdUser" asp-route-idProducto="@item.IdProducto" class="btn btn-success">Comprar</a>
+                        </td>
+                        <td>
+                            <a asp-controller="Home" asp-action="InsertarCarrito" asp-route-idItem="@item.IdItem" class="btn btn-success">Añadir al Carrito</a>
+                        </td>
+                    }
+                </tr>
+            }
+
+        }
+    </tbody>
+</table>
+
+@*@section Scripts{
+    <script>
+        $(document).ready(function () {
+            $(".anadirCarrito").click(function () {
+                var idItem = $(this).attr("name");
+                var url = "@Url.Action("InsertCarrito", "Home")";
+                var data = { idItem: idItem.toString(), idProducto: idProducto };
+                $.post(url, data).then(function (data) {
+                    if (data.result == 'Redirect') {
+                        window.location = data.url;
+                    }
+                });
+            });
+        });
+    </script>*@

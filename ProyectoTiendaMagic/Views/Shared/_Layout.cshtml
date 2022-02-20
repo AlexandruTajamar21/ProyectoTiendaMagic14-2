@@ -7,6 +7,8 @@
     <link href="~/lib/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="~/css/site.css" />
     <link href="~/css/Estilos.css" rel="stylesheet" />
+    @RenderSection("style", false)
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css%22%3E"  />
 </head>
 <body>
     <header>
@@ -31,7 +33,7 @@
     </header>
     <div>
         <main role="main" class="pb-3">
-            <img id="imgFondo" src="~/Fondos/fondomagic2.png" />
+            @*<img id="imgFondo" src="~/Fondos/fondomagic2.png" />*@
             @RenderBody()
         </main>
     </div>
@@ -39,5 +41,6 @@
     <script src="~/lib/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
+    @RenderSection("script", false)
 </body>
 </html>
