@@ -21,6 +21,8 @@
             <th>
                 @Html.DisplayNameFor(model => model.Precio)
             </th>
+            <th></th>
+            <th></th>
         </tr>
     </thead>
     <tbody>
@@ -36,10 +38,15 @@
                     @Html.DisplayFor(modelItem => item.IdProducto)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Precio)
+                    @Html.DisplayFor(modelItem => item.Precio)€
+                </td>
+                <td><img src="~/Assets/Cartas/@item.Imagen" style="width:100px;height:150px"/></td>
+                <td>
+                    <a class="btn btn-danger" asp-controller="Home" asp-action="BorrarElementoCarrito" asp-route-idCarta="@item.IdItem">Eliminar</a>
                 </td>
             </tr>
     }
         </tbody>
     </table>
+    <a asp-controller="Home" asp-action="ComprarCarrito" class="btn btn-success">Finalizar Compra</a>
 }

@@ -1,0 +1,59 @@
+﻿@model IEnumerable<ProyectoTiendaMagic.Models.Compra>
+
+@{
+    ViewData["Title"] = "MisCompras";
+}
+
+<h1>MisCompras</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.IdCompra)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IdComprador)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IdIdVendedorUser)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IdItem)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Precio)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdCompra)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdComprador)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdIdVendedorUser)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdItem)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Precio)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

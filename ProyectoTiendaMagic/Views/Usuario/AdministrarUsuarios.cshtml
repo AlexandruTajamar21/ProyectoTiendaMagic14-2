@@ -1,0 +1,66 @@
+﻿@model IEnumerable<ProyectoTiendaMagic.Models.Usuario>
+
+@{
+    ViewData["Title"] = "AdministrarUsuarios";
+}
+
+<h1>AdministrarUsuarios</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.IdUser)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Nombre)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Contraseña)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Direccion)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Correo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TipoUsuario)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdUser)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Nombre)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Contraseña)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Direccion)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Correo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TipoUsuario)
+            </td>
+            <td>
+                <a asp-controller="Usuario" asp-action="BorrarUsuario" asp-route-idUsuario="@item.IdUser">Eliminar</a>
+            </td>
+            <td>
+                <a asp-controller="Usuario" asp-action="VerificarCompras" asp-route-idUsuario="@item.IdUser">VerificarCompras</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

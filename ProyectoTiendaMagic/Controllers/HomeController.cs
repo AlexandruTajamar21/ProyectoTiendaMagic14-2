@@ -65,7 +65,9 @@ namespace ProyectoTiendaMagic.Controllers
         public IActionResult Comprar(int idCarta, string idProducto)
         {
             int userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
+            Item item = this.repo.getItemId(idCarta);
             this.repo.TransfiereCarta(idCarta, userId);
+            this.repo.RegistraCompra(userId, item.IdUser, item.IdItem, item.Precio);
             return RedirectToAction("CompraCartas", new { idProducto = idProducto });
         }
 
@@ -91,10 +93,30 @@ namespace ProyectoTiendaMagic.Controllers
             List<Item> items = this.repo.GetItemsCarrito(carrito);
             return View(items);
         }
-        [AuthorizeUsers(Policy = "ACCESOADMIN")]
-        public IActionResult Prueba()
+        public IActionResult BorrarElementoCarrito(int idCarta)
         {
-            return View();
+            if (HttpContext.Session.GetObject<List<int>>("CARRITO")!= null)
+            {
+                List<int> carrito = HttpContext.Session.GetObject<List<int>>("CARRITO");
+                carrito.Remove(idCarta);
+                HttpContext.Session.SetObject("CARRITO", carrito);
+            }
+            return RedirectToAction("Carrito");
+        }
+        public IActionResult ComprarCarrito()
+        {
+            int userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
+            if (HttpContext.Session.GetObject<List<int>>("CARRITO") != null)
+            {
+                List<int> carrito = HttpContext.Session.GetObject<List<int>>("CARRITO");
+                foreach(int id in carrito)
+                {
+                    Item item = this.repo.getItemId(id);
+                    this.repo.TransfiereCarta(id, userId);
+                    this.repo.RegistraCompra(userId, item.IdUser, item.IdItem, item.Precio);
+                }
+            }
+            return RedirectToAction("Index");
         }
     }
 }

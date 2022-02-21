@@ -20,7 +20,12 @@ else
     <ul class="dropdown-menu" style="right: 0 !important; left: auto;">
         <li><a class="dropdown-item" asp-action="PerfilUsuario" asp-controller="Usuario">Perfil</a></li>
         <li><a class="dropdown-item" asp-action="Carrito" asp-controller="Home">Carrito Compra</a></li>
+        <li><a class="dropdown-item" asp-action="MisCompras" asp-controller="Usuario">Mis Compras</a></li>
         <li><a class="dropdown-item" asp-action="Vender" asp-controller="Home">Vender</a></li>
+        @if (Context.User.FindFirst(ClaimTypes.Role).Value == "Admin")
+        {
+            <li><a class="dropdown-item" asp-controller="Usuario" asp-action="AdministrarUsuarios">Administrar Usuarios</a></li>
+        }
         <li><hr class="dropdown-divider"></li>
         <li><a class="dropdown-item" asp-controller="Manage" asp-action="LogOut">LogOut</a></li>
     </ul>

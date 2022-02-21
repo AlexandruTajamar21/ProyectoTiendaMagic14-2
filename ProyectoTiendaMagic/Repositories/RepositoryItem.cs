@@ -20,7 +20,12 @@ using System.Threading.Tasks;
 //    INSERT INTO Item
 //	VALUES (@IdItem, @Nombre, @IdUser, @IdProducto, @Precio, @Estado, @Imagen, @Descripcion)
 //go
-
+//create procedure SP_REGISTRA_COMPRA
+//(@IdCompra int, @IdComprador int, @IdVendedor int, @IdItem int, @Precio int)
+//as
+//    insert into Compra
+//	values(@IdCompra, @IdComprador, @IdVendedor, @IdItem, @Precio)
+//go
 #endregion
 
 namespace ProyectoTiendaMagic.Repositories
@@ -63,12 +68,45 @@ namespace ProyectoTiendaMagic.Repositories
             return consulta.ToList();
         }
 
+        internal List<Compra> GetComprasUsuario(int userId)
+        {
+            var consulta = from datos in this.context.Compras
+                           where datos.IdComprador == userId
+                           select datos;
+            return consulta.ToList();
+        }
+
         public void TransfiereCarta(int idCarta, int userId)
         {
             string sql = "SP_TRASFIERE_CARTA @IdItem,@IdUser";
             SqlParameter pamidItem = new SqlParameter("@IdItem", idCarta);
             SqlParameter pamIdUser = new SqlParameter("@IdUser", userId);
             this.context.Database.ExecuteSqlRaw(sql, pamidItem, pamIdUser);
+
+        }
+
+        public void RegistraCompra(int idComprador, int idVendedor, int idItem, int precio)
+        {
+            int idCompra = this.GetMaxIDCompra();
+            string sql = "SP_REGISTRA_COMPRA @IdCompra, @IdComprador, @IdVendedor, @IdItem, @Precio";
+            SqlParameter pamIdCompra = new SqlParameter("@IdCompra", idCompra);
+            SqlParameter pamIdComprador = new SqlParameter("@IdComprador", idComprador);
+            SqlParameter pamIdVendedor = new SqlParameter("@IdVendedor", idVendedor);
+            SqlParameter pamIdItem = new SqlParameter("@IdItem", idItem);
+            SqlParameter pamIdPrecio = new SqlParameter("@Precio", precio);
+            this.context.Database.ExecuteSqlRaw(sql, pamIdCompra, pamIdComprador, pamIdVendedor, pamIdItem, pamIdPrecio);
+        }
+
+        public int GetMaxIDCompra()
+        {
+            if (this.context.Compras.Count() == 0)
+            {
+                return 1;
+            }
+            else
+            {
+                return this.context.Compras.Max(z => z.IdCompra) + 1;
+            }
         }
 
         public List<VW_ItemsUsuario_Listados> GetItemsProducto(string producto)

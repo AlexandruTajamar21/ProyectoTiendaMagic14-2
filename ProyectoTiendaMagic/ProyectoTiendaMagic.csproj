@@ -12,6 +12,20 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="wwwroot\Assets\Cartas\AdrixYNev.jpg" />
+    <None Include="wwwroot\Assets\Cartas\ArtesanoHornotormenta.png" />
+    <None Include="wwwroot\Assets\Cartas\BlackLotus.jpg" />
+    <None Include="wwwroot\Assets\Cartas\El-muro-de-Trump.jpg" />
+    <None Include="wwwroot\Assets\Cartas\Exhumemos-y-cambiemos-calles-de-nombre.jpg" />
+    <None Include="wwwroot\Assets\Cartas\Justin-Biever-en-concierto.jpg" />
+    <None Include="wwwroot\Assets\Cartas\LathlissDragonQueen.jpg" />
+    <None Include="wwwroot\Assets\Cartas\Me-puedes-comer-los-huevos.png" />
+    <None Include="wwwroot\Assets\Cartas\TerrorOfPeaks.jpg" />
+    <None Include="wwwroot\Assets\Cartas\TheScarabGod.jpg" />
+    <None Include="wwwroot\Assets\Images\Fondo1.jfif" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Session" Version="2.2.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.13" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="5.0.13" />

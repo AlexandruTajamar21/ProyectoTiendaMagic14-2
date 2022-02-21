@@ -38,12 +38,12 @@
             <div class="col m-2" style="width: 286px;">
                 <div class="card" style="width: 286px; height: 463px;">
                     <img class="img-fluid rounded" style="object-fit:cover; width: 286px; height: 463px;"
-                         src="@item.Imagen" alt="@item.Nombre" />
+                         src="~/Assets/Cartas/@item.Imagen" alt="@item.Nombre" />
                     <div class="cartaAnimada card-img-overlay p-0 d-flex align-items-end">
                         <div class="ocultar-elemento-active col-12 p-3 text-center"
                              style="background-color: rgba(170,212,235,0.9); ">
                             <h5 class="card-title">@item.Nombre</h5>
-                            <a class="btn btn-success" asp-controller="Home" asp-action="CompraCartas" asp-route-idProducto="@item.IdProducto">Modificar</a>
+                            <a class="btn btn-success" asp-controller="Home" asp-action="ModificarCarta" asp-route-idProducto="@item.IdProducto">Modificar</a>
                         </div>
                     </div>
                 </div>

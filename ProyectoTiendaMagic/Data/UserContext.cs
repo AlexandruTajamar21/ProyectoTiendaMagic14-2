@@ -16,5 +16,6 @@ namespace ProyectoTiendaMagic.Data
         public DbSet<Item> Items { get; set; }
         public DbSet<ViewProducto> VeiwsProducto { get; set; }
         public DbSet<VW_ItemsUsuario_Listados> VeiwsItemsUsuario { get; set; }
+        public DbSet<Compra> Compras { get; set; }
     }
 }

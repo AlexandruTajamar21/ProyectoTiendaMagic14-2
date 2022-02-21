@@ -46,6 +46,19 @@ namespace ProyectoTiendaMagic.Controllers
             return View(items);
         }
 
+        public IActionResult AdministrarUsuarios()
+        {
+            List<Usuario> usuarios = this.repo.GetAllUsuarios();
+            return View(usuarios);
+        }
+
+        public IActionResult MisCompras()
+        {
+            int userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
+            List<Compra> compras = this.repoitem.GetComprasUsuario(userId);
+            return View(compras);
+        }
+
         public IActionResult Registro()
         {
             return View();

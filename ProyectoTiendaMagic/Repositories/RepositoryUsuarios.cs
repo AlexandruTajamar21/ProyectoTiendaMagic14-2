@@ -36,8 +36,8 @@ namespace ProyectoTiendaMagic.Repositories
 
         public List<Usuario> GetAllUsuarios()
         {
-            string sql = "SP_ALL_EMPLEADOS";
-            var consulta = this.context.Usuarios.FromSqlRaw(sql);
+            var consulta = from datos in this.context.Usuarios
+                           select datos;
             return consulta.ToList();
         }
 
