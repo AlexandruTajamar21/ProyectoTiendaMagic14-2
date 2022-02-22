@@ -3,33 +3,43 @@
 @{
     ViewData["Title"] = "ModificarCartas";
 }
-
-<table class="table">
+<img id="imgFondo" src="~/Fondos/Fondo2.jpg" />
+<table class="table mt2">
     <thead>
         <tr>
             <th>
                 Nombre
             </th>
             <th>
+                Imagen
+            </th>
+            <th>
                 Precio
             </th>
+            <th></th>
             <th></th>
         </tr>
     </thead>
     <tbody>
         @foreach (var item in Model)
         {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.IdProducto)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Precio)€
-                </td>
-                <td>
-                    <a asp-controller="Home" asp-action="ModificarCarta" asp-route-idCarta="@item.IdItem" class="btn btn-dark">Modificar</a>
-                </td>
-            </tr>
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdProducto)
+            </td>
+            <td>
+                <img src="~/Assets/Cartas/@item.Imagen" style="width:100px;height:150px" />
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Precio)€
+            </td>
+            <td  class="col-1">
+                <a asp-controller="Home" asp-action="ModificarCarta" asp-route-idCarta="@item.IdItem" class="btn btn-dark">Modificar</a>
+            </td>
+            <td class="col-1">
+                <a class="btn btn-danger" asp-controller="Home" asp-action="BorrarItem" asp-route-idItem="@item.IdItem" asp-route-idProducto="@item.IdProducto">Delete</a>
+            </td>
+        </tr>
         }
     </tbody>
 </table>

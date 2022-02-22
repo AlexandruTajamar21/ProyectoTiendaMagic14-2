@@ -26,6 +26,21 @@ using System.Threading.Tasks;
 //    insert into Compra
 //	values(@IdCompra, @IdComprador, @IdVendedor, @IdItem, @Precio)
 //go
+
+//create procedure SP_DELETE_ITEM
+//(@IdItem int)
+//as
+//    delete from Item
+
+//    where IdItem = @IdItem
+//go
+
+//alter view VW_Distinct_Items_Usuario
+//as
+//	select distinct(IdProducto), Imagen,Nombre,IdUser
+//    from Item
+//go
+
 #endregion
 
 namespace ProyectoTiendaMagic.Repositories
@@ -44,11 +59,10 @@ namespace ProyectoTiendaMagic.Repositories
             return consulta.ToList();
         }
 
-        public List<Item> getItemsUser(int userId)
+        public List<ViewProductoUsuario> getItemsUser(int userId)
         {
-            var consulta = from datos in this.context.Items
-                           where datos.IdUser == userId
-                           select datos;
+            string sql = "select * from VW_Distinct_Items_Usuario where IdUser = '" + userId + "'";
+            var consulta = this.context.ProductoUsuarios.FromSqlRaw(sql);
             return consulta.ToList();
         }
 
@@ -66,6 +80,13 @@ namespace ProyectoTiendaMagic.Repositories
             string sql = "select * from VW_Items_Producto where Nombre like '%" + filtro + "%'";
             var consulta = this.context.VeiwsProducto.FromSqlRaw(sql);
             return consulta.ToList();
+        }
+
+        internal void DeleteItem(int idItem)
+        {
+            string sql = "SP_DELETE_ITEM @IdItem";
+            SqlParameter pamidItem = new SqlParameter("@IdItem", idItem);
+            this.context.Database.ExecuteSqlRaw(sql, pamidItem);
         }
 
         internal List<Compra> GetComprasUsuario(int userId)

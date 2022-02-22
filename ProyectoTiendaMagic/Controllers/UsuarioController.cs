@@ -41,12 +41,13 @@ namespace ProyectoTiendaMagic.Controllers
             //@if(Context.User.Claims.Contains(Context.User.FindFirst("Especial")))
             int userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
             string username = User.FindFirstValue(ClaimTypes.Name);
-            List<Item> items = this.repoitem.getItemsUser(userId);
+            List<ViewProductoUsuario> items = this.repoitem.getItemsUser(userId);
 
             Usuario user = this.repo.GetUsuario(username);
             ViewData["Direccion"] = user.Direccion;
             ViewData["Correo"] = user.Correo;
             ViewData["Nombre"] = user.Nombre;
+            ViewData["TipoUsuario"] = user.TipoUsuario;
 
             return View(items);
         }

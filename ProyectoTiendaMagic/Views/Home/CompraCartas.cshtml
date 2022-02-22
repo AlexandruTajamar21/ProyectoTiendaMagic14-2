@@ -3,10 +3,10 @@
 @{
     ViewData["Title"] = "CompraCartas";
 }
-
+<img id="imgFondo" src="~/Fondos/Fondo2.jpg" />
 <div class="row row-cols-4 justify-content-center">
     <div class="col-12">
-        <div class="card mb-3 mt-5" style=" background-color: rgba(170,212,235,0.7)">
+        <div class="card mb-3 mt-5" style=" background-color:gainsboro">
             <div class="row g-0">
                 <div class="col-sm-12 col-md-6 col-lg-5 d-flex justify-content-center">
                     <img style="object-fit: cover; height:400px;width:300px" src="~/Assets/Cartas/@Model.First().Imagen" class="img-fluid border border-2 border-dark" alt="Ayaka">
@@ -38,6 +38,10 @@
             {
                 <th></th>
                 <th></th>
+                @if (User.FindFirstValue(ClaimTypes.Role) == "Admin")
+                {
+                    <th></th>
+                }
             }
             </tr>
     </thead>
@@ -48,26 +52,32 @@
             {
                 @if (int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)) != item.IdUser)
                 {
-                    <tr>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Nombre)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Precio)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Estado)
-                        </td>
-                        @if (Context.User.Identity.IsAuthenticated)
-                        {
-                            <td>
-                                <a asp-controller="Home" asp-action="Comprar" asp-route-idCarta="@item.IdItem" asp-route-idVendedor="@item.IdUser" asp-route-idProducto="@item.IdProducto" class="btn btn-success">Comprar</a>
-                            </td>
-                            <td>
-                                <a asp-controller="Home" asp-action="InsertarCarrito" asp-route-idItem="@item.IdItem" class="btn btn-success">Añadir al Carrito</a>
-                            </td>
-                        }
-                    </tr>
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Nombre)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Precio)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Estado)
+            </td>
+            @if (Context.User.Identity.IsAuthenticated)
+            {
+                <td class="col-1">
+                    <a asp-controller="Home" asp-action="Comprar" asp-route-idCarta="@item.IdItem" asp-route-idVendedor="@item.IdUser" asp-route-idProducto="@item.IdProducto" class="btn btn-success">Comprar</a>
+                </td>
+                <td class="col-1">
+                    <a asp-controller="Home" asp-action="InsertarCarrito" asp-route-idItem="@item.IdItem" class="btn btn-success">Añadir al Carrito</a>
+                </td>
+                @if (User.FindFirstValue(ClaimTypes.Role)== "Admin")
+                {
+                    <td class="col-1">
+                        <a asp-controller="Home" asp-action="BorrarItemCompras" asp-route-idItem="@item.IdItem" asp-route-idProducto="@item.IdProducto" class="btn btn-danger">Eliminar</a>
+                    </td>
+                }
+            }
+        </tr>
                 }
             }
             else

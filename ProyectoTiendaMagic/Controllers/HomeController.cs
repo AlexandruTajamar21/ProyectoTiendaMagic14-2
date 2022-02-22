@@ -62,6 +62,18 @@ namespace ProyectoTiendaMagic.Controllers
             return View();
         }
 
+        public IActionResult BorrarItem(int idItem, string idProducto)
+        {
+            this.repo.DeleteItem(idItem);
+            return RedirectToAction("ModificarCartas", new { idProducto = idProducto });
+        }
+
+        public IActionResult BorrarItemCompras(int idItem, string idProducto)
+        {
+            this.repo.DeleteItem(idItem);
+            return RedirectToAction("CompraCartas", new { idProducto = idProducto});
+        }
+
         public IActionResult Comprar(int idCarta, string idProducto)
         {
             int userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));

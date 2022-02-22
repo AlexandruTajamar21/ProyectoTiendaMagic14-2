@@ -3,15 +3,12 @@
 @{
     ViewData["Title"] = "Carrito";
 }
-
+<img id="imgFondo" src="~/Fondos/Fondo2.jpg" />
 @if (Model != null)
 {
-    <table class="table">
+    <table class="table table-striped">
     <thead>
         <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.IdItem)
-            </th>
             <th>
                 Vendedor
             </th>
@@ -21,17 +18,14 @@
             <th>
                 @Html.DisplayNameFor(model => model.Precio)
             </th>
-            <th></th>
-            <th></th>
+            <th class="col-2"></th>
+            <th class="col-1"></th>
         </tr>
     </thead>
     <tbody>
     @foreach (var item in Model)
     {
             <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.IdItem)
-                </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.IdUser)
                 </td>
@@ -41,8 +35,8 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.Precio)€
                 </td>
-                <td><img src="~/Assets/Cartas/@item.Imagen" style="width:100px;height:150px"/></td>
-                <td>
+                <td class="col-2"><img src="~/Assets/Cartas/@item.Imagen" style="width:100px;height:150px"/></td>
+                <td class="col-1">
                     <a class="btn btn-danger" asp-controller="Home" asp-action="BorrarElementoCarrito" asp-route-idCarta="@item.IdItem">Eliminar</a>
                 </td>
             </tr>
