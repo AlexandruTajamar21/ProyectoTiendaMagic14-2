@@ -3,12 +3,6 @@
 @{
     ViewData["Title"] = "AdministrarUsuarios";
 }
-
-<h1>AdministrarUsuarios</h1>
-
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
 <table class="table">
     <thead>
         <tr>
@@ -55,10 +49,10 @@
                 @Html.DisplayFor(modelItem => item.TipoUsuario)
             </td>
             <td>
-                <a asp-controller="Usuario" asp-action="BorrarUsuario" asp-route-idUsuario="@item.IdUser">Eliminar</a>
+                <a asp-controller="Usuario" asp-action="BorrarUsuario" asp-route-idUsuario="@item.IdUser" class="btn btn-danger">Eliminar</a>
             </td>
             <td>
-                <a asp-controller="Usuario" asp-action="VerificarCompras" asp-route-idUsuario="@item.IdUser">VerificarCompras</a>
+                <a asp-controller="Usuario" asp-action="VerificarCompras" asp-route-idUsuario="@item.IdUser" class="btn btn-info">VerificarCompras</a>
             </td>
         </tr>
 }

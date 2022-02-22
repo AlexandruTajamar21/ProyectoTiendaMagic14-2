@@ -83,6 +83,18 @@ namespace ProyectoTiendaMagic.Controllers
             return View();
         }
 
+        public IActionResult ModificarCartas(string idProducto)
+        {
+            int userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
+            List<VW_ItemsUsuario_Listados> items = this.repo.getItemsUserProducto(idProducto, userId);
+            return View(items);
+        }
+        public IActionResult ModificarCarta(int idCarta)
+        {
+            Item item = this.repo.getItemId(idCarta);
+            return View(item);
+        }
+
         public IActionResult Carrito()
         {
             if(HttpContext.Session.GetObject<List<int>>("CARRITO") == null)
@@ -115,6 +127,7 @@ namespace ProyectoTiendaMagic.Controllers
                     this.repo.TransfiereCarta(id, userId);
                     this.repo.RegistraCompra(userId, item.IdUser, item.IdItem, item.Precio);
                 }
+                HttpContext.Session.Clear();
             }
             return RedirectToAction("Index");
         }

@@ -24,6 +24,11 @@ namespace ProyectoTiendaMagic.Controllers
             this.repoitem = repoitem;
         }
 
+        public IActionResult Pruebas()
+        {
+            return View();
+        }
+
         [AuthorizeUsers]
         public IActionResult LogInUsuario()
         {
@@ -46,17 +51,66 @@ namespace ProyectoTiendaMagic.Controllers
             return View(items);
         }
 
+        public IActionResult BorrarUsuario(int idUsuario)
+        {
+            this.repo.DeleteUsuario(idUsuario);
+            return RedirectToAction("AdministrarUsuarios");
+        }
+
         public IActionResult AdministrarUsuarios()
         {
             List<Usuario> usuarios = this.repo.GetAllUsuarios();
             return View(usuarios);
         }
 
+        public IActionResult VerificarCompras(int idUsuario)
+        {
+            List<Compra> compras = this.repoitem.GetComprasUsuario(idUsuario);
+            List<ResumenCompra> rescompras = new List<ResumenCompra>();
+            foreach (Compra compra in compras)
+            {
+                Usuario vendedor = this.repo.GetUsuarioId(compra.IdVendedorUser);
+                Usuario comprador = this.repo.GetUsuarioId(compra.IdComprador);
+                Item item = this.repoitem.getItemId(compra.IdItem);
+                ResumenCompra rescomp = new ResumenCompra();
+                rescomp.IdCompra = compra.IdCompra;
+                rescomp.IdItem = compra.IdItem;
+                rescomp.Precio = compra.Precio;
+                rescomp.IdComprador = compra.IdComprador;
+                rescomp.IdVendedorUser = compra.IdVendedorUser;
+                rescomp.IdProducto = item.IdProducto;
+                rescomp.Imagen = item.Imagen;
+                rescomp.NombreComprador = comprador.Nombre;
+                rescomp.NombreVendedor = vendedor.Nombre;
+                rescompras.Add(rescomp);
+            }
+            return View(rescompras);
+        }
+
         public IActionResult MisCompras()
         {
             int userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
             List<Compra> compras = this.repoitem.GetComprasUsuario(userId);
-            return View(compras);
+            List<ResumenCompra> rescompras = new List<ResumenCompra>();
+            foreach(Compra com in compras)
+            {
+                ResumenCompra comp = new ResumenCompra();
+                Usuario comprador = this.repo.GetUsuarioId(com.IdComprador);
+                Usuario vendedor = this.repo.GetUsuarioId(com.IdVendedorUser);
+                Item item = this.repoitem.getItemId(com.IdItem);
+                comp.IdCompra = com.IdCompra;
+                comp.IdItem = com.IdItem;
+                comp.Precio = com.Precio;
+                comp.IdComprador = com.IdComprador;
+                comp.IdVendedorUser = comp.IdVendedorUser;
+                comp.IdProducto = item.IdProducto;
+                comp.Imagen = item.Imagen;
+                comp.NombreComprador = comprador.Nombre;
+                comp.NombreVendedor = vendedor.Nombre;
+                rescompras.Add(comp);
+
+            }
+            return View(rescompras);
         }
 
         public IActionResult Registro()

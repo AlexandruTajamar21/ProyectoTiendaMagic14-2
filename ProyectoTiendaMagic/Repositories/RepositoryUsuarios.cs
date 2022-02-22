@@ -9,17 +9,25 @@ using System.Threading.Tasks;
 
 #region Procedures
 
-    //ALTER procedure[dbo].[SP_INSERTAR_USUARIO]
-    //(@IdUser int, @Nombre varchar(50), @Contraseña varchar(50), @Direccion varchar(50), @Correo varchar(50),@TipoUsuario varchar(50))
-    //as
-    //    INSERT INTO Usuario
-	   // VALUES (@IdUser, @Nombre, @Contraseña, @Direccion, @Correo, @TipoUsuario)
-    //go
+//ALTER procedure[dbo].[SP_INSERTAR_USUARIO]
+//(@IdUser int, @Nombre varchar(50), @Contraseña varchar(50), @Direccion varchar(50), @Correo varchar(50),@TipoUsuario varchar(50))
+//as
+//    INSERT INTO Usuario
+// VALUES (@IdUser, @Nombre, @Contraseña, @Direccion, @Correo, @TipoUsuario)
+//go
 
-    //create procedure SP_Get_Max_Id
-    //as
-	   // select MAX(IdUser) from Usuario
-    //go
+//create procedure SP_Get_Max_Id
+//as
+// select MAX(IdUser) from Usuario
+//go
+
+//create procedure SP_DELETE_USUARIO
+//(@IdUsuario int)
+//as
+//    delete from Usuario
+
+//    where IdUser = @IdUsuario
+//go
 
 #endregion
 
@@ -66,6 +74,13 @@ namespace ProyectoTiendaMagic.Repositories
             }
         }
 
+        public void DeleteUsuario(int idUsuario)
+        {
+            string sql = "SP_DELETE_USUARIO @IdUsuario";
+            SqlParameter pamid = new SqlParameter("@IdUsuario", idUsuario);
+            this.context.Database.ExecuteSqlRaw(sql,pamid);
+        }
+
         public int GetMaxId()
         {
             if (this.context.Usuarios.Count() == 0)
@@ -76,6 +91,14 @@ namespace ProyectoTiendaMagic.Repositories
             {
                 return this.context.Usuarios.Max(z => z.IdUser) + 1;
             }
+        }
+
+        internal Usuario GetUsuarioId(int userId)
+        {
+            var consulta = from datos in this.context.Usuarios
+                           where datos.IdUser == userId
+                           select datos;
+            return consulta.FirstOrDefault();
         }
 
         public void InsertarUsuario(string nombre, string contrasena, string correo, string TipoUsuario)

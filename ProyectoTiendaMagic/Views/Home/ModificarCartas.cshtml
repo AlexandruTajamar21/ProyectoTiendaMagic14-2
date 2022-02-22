@@ -1,0 +1,35 @@
+﻿@model IEnumerable<ProyectoTiendaMagic.Models.VW_ItemsUsuario_Listados>
+
+@{
+    ViewData["Title"] = "ModificarCartas";
+}
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Nombre
+            </th>
+            <th>
+                Precio
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IdProducto)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Precio)€
+                </td>
+                <td>
+                    <a asp-controller="Home" asp-action="ModificarCarta" asp-route-idCarta="@item.IdItem" class="btn btn-dark">Modificar</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

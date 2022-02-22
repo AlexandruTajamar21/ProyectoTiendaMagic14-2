@@ -1,25 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace ProyectoTiendaMagic.Models
 {
-    [Table("Compra")]
-    public class Compra
+    public class ResumenCompra
     {
-        [Key]
-        [Column("IdCompra")]
         public int IdCompra { get; set; }
-        [Column("IdComprador")]
         public int IdComprador { get; set; }
-        [Column("IdVendedor")]
+        public string NombreComprador { get; set; }
         public int IdVendedorUser { get; set; }
-        [Column("IdItem")]
+        public string NombreVendedor { get; set; }
+        public string IdProducto { get; set; }
+        public string Imagen { get; set; }
         public int IdItem { get; set; }
-        [Column("Precio")]
         public int Precio { get; set; }
     }
 }

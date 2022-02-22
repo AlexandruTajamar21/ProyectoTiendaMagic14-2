@@ -7,8 +7,7 @@
 <img id="imgFondo" src="~/Fondos/fondomagic2.png" />
 <form method="post">
     <div class="row justify-content-center">
-        <div class="col-10 col-sm-8 col-md-6 col-lg-5 col-xl-4 col-xxl-3 rounded border-primary border border-2 my-2"
-             style="background-color:grey)">
+        <div class="col-10 col-sm-8 col-md-6 col-lg-5 col-xl-4 col-xxl-3 rounded">
             <div class="form-floating my-2">
                 <input type="text" class="form-control" name="filtroNombre"
                        placeholder="introduzca nombre">
@@ -32,7 +31,7 @@
                      src="~/Assets/Cartas/@item.Imagen" alt="@item.Nombre" />
                 <div class="cartaAnimada card-img-overlay p-0 d-flex align-items-end">
                     <div class="ocultar-elemento-active col-12 p-3 text-center"
-                         style="background-color: rgba(170,212,235,0.9); ">
+                         style="background-color:gray">
                         <h5 class="card-title">@item.Nombre</h5>
                         <a class="btn btn-success" asp-controller="Home" asp-action="CompraCartas" asp-route-idProducto="@item.IdProducto">Comprar</a>
                     </div>

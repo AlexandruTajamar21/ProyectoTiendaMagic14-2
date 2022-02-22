@@ -97,6 +97,14 @@ namespace ProyectoTiendaMagic.Repositories
             this.context.Database.ExecuteSqlRaw(sql, pamIdCompra, pamIdComprador, pamIdVendedor, pamIdItem, pamIdPrecio);
         }
 
+        internal List<VW_ItemsUsuario_Listados> getItemsUserProducto(string idProducto, int userId)
+        {
+            var consulta = from datos in this.context.VeiwsItemsUsuario
+                           where datos.IdProducto == idProducto && datos.IdUser == userId
+                           select datos;
+            return consulta.ToList();
+        }
+
         public int GetMaxIDCompra()
         {
             if (this.context.Compras.Count() == 0)

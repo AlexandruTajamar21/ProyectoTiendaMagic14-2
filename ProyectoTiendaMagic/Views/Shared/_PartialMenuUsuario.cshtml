@@ -5,16 +5,16 @@
 @if (Context.User.Identity.IsAuthenticated == false)
 {
     <div class="nav-item" style="justify-content:end">
-        <a class="nav-link" asp-controller="Usuario" asp-action="LogInUsuario">Login</a>
+        <a class="btn btn-info" style="margin-right:20px" asp-controller="Usuario" asp-action="LogInUsuario">Login</a>
     </div>
     <div class="nav-item" style="justify-content:end">
-        <a class="nav-link" asp-controller="Usuario" asp-action="Registro">Registro</a>
+        <a class="btn btn-info" asp-controller="Usuario" asp-action="Registro">Registro</a>
     </div>
 }
 else
 {
 <div class="dropdown">
-    <button type="button" class="btn dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown">
+    <button type="button" class="btn btn-light dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown">
         <span>@nombre</span>
     </button>
     <ul class="dropdown-menu" style="right: 0 !important; left: auto;">

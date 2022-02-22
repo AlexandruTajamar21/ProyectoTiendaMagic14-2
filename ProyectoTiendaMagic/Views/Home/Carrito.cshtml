@@ -4,7 +4,7 @@
     ViewData["Title"] = "Carrito";
 }
 
-@if(Model != null)
+@if (Model != null)
 {
     <table class="table">
     <thead>
@@ -26,7 +26,8 @@
         </tr>
     </thead>
     <tbody>
-    @foreach (var item in Model) {
+    @foreach (var item in Model)
+    {
             <tr>
                 <td>
                     @Html.DisplayFor(modelItem => item.IdItem)
@@ -49,4 +50,8 @@
         </tbody>
     </table>
     <a asp-controller="Home" asp-action="ComprarCarrito" class="btn btn-success">Finalizar Compra</a>
+}
+else
+{
+    <h3 style="justify-content:center"> No tienes Elementos en el carrito</h3>
 }
