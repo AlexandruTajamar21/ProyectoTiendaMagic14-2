@@ -118,6 +118,21 @@ namespace ProyectoTiendaMagic.Repositories
             this.context.Database.ExecuteSqlRaw(sql, pamIdCompra, pamIdComprador, pamIdVendedor, pamIdItem, pamIdPrecio);
         }
 
+        internal void UpdateItem(int idItem, string imagen, int idUser, string nombre, string producto, int precio, string descripcion, int estado)
+        {
+            int idCompra = this.GetMaxIDCompra();
+            string sql = "SP_UPDATE_ITEM @IdItem, @Imagen, @IdUser, @Nombre, @Producto, @Precio, @Descripcion, @Estado";
+            SqlParameter pamIdItem = new SqlParameter("@IdItem", idItem);
+            SqlParameter pamIdImagen = new SqlParameter("@Imagen", imagen);
+            SqlParameter pamIdUser = new SqlParameter("@IdUser", idUser);
+            SqlParameter pamNombre = new SqlParameter("@Nombre", nombre);
+            SqlParameter pamProducto = new SqlParameter("@Producto", producto);
+            SqlParameter pamIdPrecio = new SqlParameter("@Precio", precio);
+            SqlParameter pamDescripcion = new SqlParameter("@Descripcion", descripcion);
+            SqlParameter pamEstado = new SqlParameter("@Estado", estado);
+            this.context.Database.ExecuteSqlRaw(sql, pamIdItem, pamIdImagen, pamIdUser, pamNombre, pamProducto, pamIdPrecio, pamDescripcion, pamEstado);
+        }
+
         internal List<VW_ItemsUsuario_Listados> getItemsUserProducto(string idProducto, int userId)
         {
             var consulta = from datos in this.context.VeiwsItemsUsuario

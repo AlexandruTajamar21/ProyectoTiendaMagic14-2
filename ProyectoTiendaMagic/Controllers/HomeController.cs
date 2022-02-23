@@ -106,6 +106,14 @@ namespace ProyectoTiendaMagic.Controllers
             Item item = this.repo.getItemId(idCarta);
             return View(item);
         }
+        [HttpPost]
+        public IActionResult ModificarCarta(int IdItem ,string Imagen, string Nombre, string Producto, int Precio, string Descripcion)
+        {
+            int userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
+            this.repo.UpdateItem(IdItem,Imagen, userId,Nombre,Producto,Precio,Descripcion,1);
+            Item item = this.repo.getItemId(IdItem);
+            return View(item);
+        }
 
         public IActionResult Carrito()
         {
